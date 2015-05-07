@@ -1,37 +1,46 @@
 class PrimeGetter
-  def self.prime_not_upper_than(n)
-    unless n.is_a? Integer
-      puts "n must be an integer."
+  attr_accessor :max_num
+  def initialize(max_num)
+    @max_num = max_num
+  end
+
+  def prime_not_upper_than
+    unless max_num.is_a? Integer
+      puts "max_num must be an integer."
       return nil
     end
-    if n < 0
-      puts "n must be greater than 0."
+    if max_num < 0
+      puts "max_num must be greater than 0."
       return nil
     end
-    ar = [2]
+
+    prime_numbers = [2]
     i = 3
-    while (i < n) do
-      ip = true
-      ar.each do |a|
-        if (i % a == 0)
-          ip = false
+
+    while (i < max_num) do
+      is_prime = true
+      prime_numbers.each do |num|
+        if (i % num == 0)
+          is_prime = false
           break
-        elsif (a > Math.sqrt(i))
+        elsif (num > Math.sqrt(i))
           break
         end
       end
-      if(ip)
-        ar.push(i)
+      if(is_prime)
+        prime_numbers.push(i)
       end
       i = i+1
     end 
-    return ar
+
+    return prime_numbers
   end
 
 end
 
 if __FILE__ == $0
-  puts PrimeGetter.prime_not_upper_than(ARGV[0].to_i)
+  prime = PrimeGetter.new(ARGV[0].to_i)
+  puts prime.prime_not_upper_than
 end
 
 # Get prime numbers not upper than maximum number
